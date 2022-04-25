@@ -1,0 +1,10 @@
+package com.example.emt_library.repositories;
+
+import com.example.emt_library.models.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AuthorRepository extends JpaRepository<Author, Long> {
+
+}
