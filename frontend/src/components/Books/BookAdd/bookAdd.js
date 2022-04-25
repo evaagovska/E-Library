@@ -11,6 +11,7 @@ const ProductAdd = (props) => {
         availableCopies:0
     })
 
+
     const handleChange = (e) => {
         updateFormData({
             ...formData,
