@@ -2,9 +2,9 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate'
 import {Link} from 'react-router-dom';
-import BookTerm from "../BookTerm/bookTerm";
+import BookTerm from "../BooksTerm/booksTerm";
 
-class Books extends React.Component {
+class BooksList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -13,6 +13,7 @@ class Books extends React.Component {
             page: 0,
             size: 5
         }
+
     }
 
     render() {
@@ -21,10 +22,7 @@ class Books extends React.Component {
         const nextPageOffset = offset + this.state.size;
         const pageCount = Math.ceil(this.props.books.length / this.state.size);
         const books = this.getBooksPage(offset, nextPageOffset);
-        console.log(books, pageCount)
 
-
-        console.log(books)
         return (
             <div className={"container mm-4 mt-5"}>
                 <div className={"row"}>
@@ -43,6 +41,7 @@ class Books extends React.Component {
                             </tbody>
                         </table>
                     </div>
+
                     <div className="col mb-3">
                         <div className="row">
                             <div className="col-sm-12 col-md-12">
@@ -73,10 +72,9 @@ class Books extends React.Component {
         })
     }
     getBooksPage = (offset, nextPageOffset) => {
-        console.log(offset, nextPageOffset)
         return this.props.books.map((term, index) => {
             return (
-                <BookTerm term={term} onDelete={this.props.onDelete} onMark={this.props.onMark} onEdit={this.props.onEdit}/>
+                <BookTerm term={term} onMark={this.props.onMark} onEdit={this.props.onEdit} onDelete={this.props.onDelete}/>
             );
         }).filter((book, index) => {
             return index >= offset && index < nextPageOffset;
@@ -85,4 +83,4 @@ class Books extends React.Component {
 
 }
 
-export default Books;
+export default BooksList;

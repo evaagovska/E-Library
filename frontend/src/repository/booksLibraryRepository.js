@@ -1,17 +1,17 @@
 import axios from '../custom-axios/axios';
 
-const LibraryService = {
-    fetchBooks: () => {
-        return axios.get("/books");
-    },
+const BooksLibraryService = {
     fetchCategories: () => {
         return axios.get("/books/categories")
     },
     fetchAuthors: () => {
         return axios.get("/authors")
     },
-    deleteBook: (id) => {
-        return axios.delete(`/books/delete/${id}`);
+    fetchBooks: () => {
+        return axios.get("/books");
+    },
+    getBook: (id) => {
+        return axios.get(`/books/${id}`);
     },
     addBook: (name, category, author, availableCopies) => {
         return axios.post("/books/add", {
@@ -29,12 +29,12 @@ const LibraryService = {
             "availableCopies": parseInt(availableCopies)
         });
     },
-    getBook: (id) => {
-        return axios.get(`/books/${id}`);
-    },
     markBook: (id) => {
         return axios.post(`/books/mark/${id}`);
+    },
+    deleteBook: (id) => {
+        return axios.delete(`/books/delete/${id}`);
     }
 }
 
-export default LibraryService;
+export default BooksLibraryService;

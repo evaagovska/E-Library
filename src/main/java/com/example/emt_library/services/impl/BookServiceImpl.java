@@ -72,8 +72,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> edit(String name, Category category, Long authorId, int availableCopies) {
-        Book book = this.booksRepository.findByName(name).orElseThrow(() -> new BookNotFoundException(name));
+    public Optional<Book> edit(Long id, String name, Category category, Long authorId, int availableCopies) {
+        Book book = this.booksRepository.findById(id).orElseThrow(() -> new BookNotFoundException(id));
 
         book.setName(name);
         book.setCategory(category);

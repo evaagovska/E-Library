@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
-const BookAdd = (props) => {
+const BooksAdd = (props) => {
 
     const history = useNavigate();
     const [formData, updateFormData] = React.useState({
@@ -34,13 +34,13 @@ const BookAdd = (props) => {
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group">
-                        <label htmlFor="name">Book name</label>
+                        <label htmlFor="name">Book Name</label>
                         <input type="text"
                                className="form-control"
                                id="name"
                                name="name"
                                required
-                               placeholder="Enter book name"
+                               placeholder="Book Name"
                                onChange={handleChange}
                         />
                     </div>
@@ -61,13 +61,13 @@ const BookAdd = (props) => {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="availableCopies">Available copies</label>
+                        <label htmlFor="availableCopies">Available Copies</label>
                         <input type="number"
                                className="form-control"
                                id="availableCopies"
                                name="availableCopies"
                                required
-                               placeholder="Enter available copies"
+                               placeholder="Available Copies"
                                onChange={handleChange}
                         />
                     </div>
@@ -78,4 +78,4 @@ const BookAdd = (props) => {
     )
 }
 
-export default BookAdd;
+export default BooksAdd;

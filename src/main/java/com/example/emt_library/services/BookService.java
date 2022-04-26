@@ -23,7 +23,7 @@ public interface BookService {
 
     Optional<Book> save(BookDto bookDto);
 
-    public Optional<Book> edit (String name, Category category, Long authorId, int availableCopies);
+    public Optional<Book> edit (Long id, String name, Category category, Long authorId, int availableCopies);
 
     Optional<Book> edit(Long id, BookDto bookDto);
 

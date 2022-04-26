@@ -1,12 +1,12 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
-const BookEdit = (props) => {
+const BooksEdit = (props) => {
 
     const history = useNavigate();
     const [formData, updateFormData] = React.useState({
         name: "",
-        category: 1,
+        category: 0,
         author: 1,
         availableCopies: 0
     })
@@ -21,11 +21,12 @@ const BookEdit = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         const name = formData.name !== "" ? formData.name : props.book.name;
-        const category = formData.category !== 1 ? formData.category : props.book.category;
+        const category = formData.category !== 0 ? formData.category : props.book.category;
         const author = formData.author !== 1 ? formData.author : props.book.author;
         const availableCopies = formData.availableCopies !== 0 ? formData.availableCopies : props.book.availableCopies;
 
         props.onEditBook(props.book.id, name, category, author, availableCopies);
+
         history("/books");
     }
 
@@ -34,7 +35,7 @@ const BookEdit = (props) => {
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group">
-                        <label htmlFor="name">Book name</label>
+                        <label htmlFor="name">Book Name</label>
                         <input type="text"
                                className="form-control"
                                id="name"
@@ -56,6 +57,7 @@ const BookEdit = (props) => {
                             )}
                         </select>
                     </div>
+
                     <div className="form-group">
                         <label>Author</label>
                         <select name="author" className="form-control" onChange={handleChange}>
@@ -69,8 +71,9 @@ const BookEdit = (props) => {
                             )}
                         </select>
                     </div>
+
                     <div className="form-group">
-                        <label htmlFor="availableCopies">Available copies</label>
+                        <label htmlFor="availableCopies">Available Copies</label>
                         <input type="number"
                                className="form-control"
                                id="availableCopies"
@@ -80,6 +83,7 @@ const BookEdit = (props) => {
                                onChange={handleChange}
                         />
                     </div>
+
                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -87,4 +91,4 @@ const BookEdit = (props) => {
     )
 }
 
-export default BookEdit;
+export default BooksEdit;
