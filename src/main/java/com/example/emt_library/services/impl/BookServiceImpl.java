@@ -64,7 +64,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> save(BookDto bookDto) {
-        Book book = new Book(bookDto.getName(), bookDto.getCategory(), bookDto.getAuthor(), bookDto.getAvailableCopies());
+        Author author = this.authorRepository.findById(bookDto.getAuthor())
+                .orElseThrow(() -> new AuthorNotFoundException(bookDto.getAuthor()));
+        Book book = new Book(bookDto.getName(), bookDto.getCategory(),author, bookDto.getAvailableCopies());
         this.booksRepository.save(book);
         return Optional.of(book);
     }

@@ -5,13 +5,19 @@ import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom
 import LibraryService from "../../repository/libraryRepository";
 import Header from "../Header/header";
 import Books from "../Books/BookList/books";
+import BookEdit from "../Books/BookEdit/bookEdit";
+import Categories from "../Categories/categories";
+import BookAdd from "../Books/BookAdd/bookAdd";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            books: []
+            books: [],
+            categories: [],
+            authors: [],
+            selectedBook: {}
         }
     }
 
@@ -22,12 +28,26 @@ class App extends Component {
                 <main>
                     <div className="container">
                         <Routes>
-                            <Route path={"/books"} exact render={() =>
-                                <Books books={this.state.books}
-                                       onDelete={this.deleteBook}
-                                       onEdit={this.getBook}/>}/>
+                            <Route path={"/"} element={<Books books={this.state.books}
+                                                              onDelete={this.deleteBook}
+                                                              onEdit={this.getBook}/>}/>
+                            <Route path={"/books"} element={<Books books={this.state.books}
+                                                                   onDelete={this.deleteBook}
+                                                                   onMark={this.markBook}
+                                                                   onEdit={this.getBook}/>}/>
+                            <Route path={"/books/add"} element={<BookAdd categories={this.state.categories}
+                                                                         authors={this.state.authors}
+                                                                         onAddBook={this.addBook}/>}/>
+                            <Route path={"/books/edit/:id"} element={<BookEdit categories={this.state.categories}
+                                                                               authors={this.state.authors}
+                                                                               onEditBook={this.editBook}
+                                                                               book={this.state.selectedBook}/>}/>
+                            <Route path={"/categories"} element={<Categories categories={this.state.categories}/>}/>
+
+
+
                         </Routes>
-                        <Navigate to={"/books"}/>
+
                     </div>
                 </main>
             </Router>
@@ -39,7 +59,27 @@ class App extends Component {
     }
 
     fetchData = () => {
+        this.loadAuthors();
+        this.loadCategories();
         this.loadBooks();
+    }
+
+    loadAuthors = () => {
+        LibraryService.fetchAuthors()
+            .then((data) => {
+                this.setState({
+                    authors: data.data
+                })
+            })
+    }
+
+    loadCategories = () => {
+        LibraryService.fetchCategories()
+            .then((data) => {
+                this.setState({
+                    categories: data.data
+                })
+            })
     }
 
     loadBooks = () => {
@@ -58,6 +98,13 @@ class App extends Component {
             });
     }
 
+    markBook = (id) => {
+        LibraryService.markBook(id)
+            .then(() => {
+                this.loadBooks();
+            })
+    }
+
     addBook = (name, category, author, availableCopies) => {
         LibraryService.addBook(name, category, author, availableCopies)
             .then(() => {
@@ -74,7 +121,7 @@ class App extends Component {
             })
     }
 
-    editProduct = (id, name, category, author, availableCopies) => {
+    editBook = (id, name, category, author, availableCopies) => {
         LibraryService.editBook(id, name, category, author, availableCopies)
             .then(() => {
                 this.loadBooks();

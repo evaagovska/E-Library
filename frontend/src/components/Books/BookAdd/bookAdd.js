@@ -1,16 +1,15 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-const ProductAdd = (props) => {
+const BookAdd = (props) => {
 
-    const history = useHistory();
+    const history = useNavigate();
     const [formData, updateFormData] = React.useState({
         name: "",
-        category: 0,
-        author: 0,
-        availableCopies:0
+        category: 1,
+        author: 1,
+        availableCopies: 0
     })
-
 
     const handleChange = (e) => {
         updateFormData({
@@ -22,13 +21,12 @@ const ProductAdd = (props) => {
     const onFormSubmit = (e) => {
         e.preventDefault();
         const name = formData.name;
-        const price = formData.price;
-        const quantity = formData.quantity;
         const category = formData.category;
-        const manufacturer = formData.manufacturer;
+        const author = formData.author;
+        const availableCopies = formData.availableCopies;
 
-        props.onAddProduct(name, price, quantity, category, manufacturer);
-        history.push("/products");
+        props.onAddBook(name, category, author, availableCopies);
+        history("/books");
     }
 
     return(
@@ -36,35 +34,13 @@ const ProductAdd = (props) => {
             <div className="col-md-5">
                 <form onSubmit={onFormSubmit}>
                     <div className="form-group">
-                        <label htmlFor="name">Product name</label>
+                        <label htmlFor="name">Book name</label>
                         <input type="text"
                                className="form-control"
                                id="name"
                                name="name"
                                required
-                               placeholder="Enter product name"
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="price">Price</label>
-                        <input type="text"
-                               className="form-control"
-                               id="price"
-                               name="price"
-                               placeholder="Price"
-                               required
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="quantity">Quantity</label>
-                        <input type="text"
-                               className="form-control"
-                               id="quantity"
-                               name="quantity"
-                               placeholder="Quantity"
-                               required
+                               placeholder="Enter book name"
                                onChange={handleChange}
                         />
                     </div>
@@ -72,17 +48,28 @@ const ProductAdd = (props) => {
                         <label>Category</label>
                         <select name="category" className="form-control" onChange={handleChange}>
                             {props.categories.map((term) =>
+                                <option value={props.categories.indexOf(term)}>{term}</option>
+                            )}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label>Author</label>
+                        <select name="author" className="form-control" onChange={handleChange}>
+                            {props.authors.map((term) =>
                                 <option value={term.id}>{term.name}</option>
                             )}
                         </select>
                     </div>
                     <div className="form-group">
-                        <label>Manufacturer</label>
-                        <select name="manufacturer" className="form-control" onChange={handleChange}>
-                            {props.manufacturers.map((term) =>
-                                <option value={term.id}>{term.name}</option>
-                            )}
-                        </select>
+                        <label htmlFor="availableCopies">Available copies</label>
+                        <input type="number"
+                               className="form-control"
+                               id="availableCopies"
+                               name="availableCopies"
+                               required
+                               placeholder="Enter available copies"
+                               onChange={handleChange}
+                        />
                     </div>
                     <button id="submit" type="submit" className="btn btn-primary">Submit</button>
                 </form>

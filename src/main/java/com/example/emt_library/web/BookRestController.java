@@ -2,16 +2,18 @@ package com.example.emt_library.web;
 
 import com.example.emt_library.models.Book;
 import com.example.emt_library.models.dto.BookDto;
+import com.example.emt_library.models.enums.Category;
 import com.example.emt_library.services.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost3000", "http://localhost:3001"})
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/api/books")
 public class BookRestController {
 
@@ -21,7 +23,7 @@ public class BookRestController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Book> findAll() {
         return this.bookService.findAll();
     }
@@ -29,6 +31,11 @@ public class BookRestController {
     @GetMapping("/pagination")
     public Page<Book> findAllWithPagination(Pageable pageable) {
         return this.bookService.findAllWithPagination(pageable);
+    }
+
+    @GetMapping("/categories")
+    private List<Category> findAllCategories() {
+        return Arrays.asList(Category.values());
     }
 
     @GetMapping("/{id}")

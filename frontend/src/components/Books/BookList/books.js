@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate'
 import {Link} from 'react-router-dom';
+import React from 'react';
+import ReactPaginate from 'react-paginate'
+import {Link} from 'react-router-dom';
 import BookTerm from "../BookTerm/bookTerm";
 
 class Books extends React.Component {
@@ -15,12 +18,15 @@ class Books extends React.Component {
     }
 
     render() {
+
         const offset = this.state.size * this.state.page;
         const nextPageOffset = offset + this.state.size;
         const pageCount = Math.ceil(this.props.books.length / this.state.size);
         const books = this.getBooksPage(offset, nextPageOffset);
         console.log(books, pageCount)
 
+
+        console.log(books)
         return (
             <div className={"container mm-4 mt-5"}>
                 <div className={"row"}>
@@ -28,6 +34,10 @@ class Books extends React.Component {
                         <table className={"table table-striped"}>
                             <thead>
                             <tr>
+                                <th scope={"col"}>Name</th>
+                                <th scope={"col"}>Category</th>
+                                <th scope={"col"}>Author</th>
+                                <th scope={"col"}>AvailableCopies</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,7 +67,6 @@ class Books extends React.Component {
             </div>
         )
     }
-
     handlePageClick = (data) => {
         let selected = data.selected;
         console.log(selected)
@@ -65,17 +74,17 @@ class Books extends React.Component {
             page: selected
         })
     }
-
     getBooksPage = (offset, nextPageOffset) => {
         console.log(offset, nextPageOffset)
         return this.props.books.map((term, index) => {
             return (
-                <BookTerm term={term} onDelete={this.props.onDelete} onEdit={this.props.onEdit}/>
+                <BookTerm term={term} onDelete={this.props.onDelete} onMark={this.props.onMark} onEdit={this.props.onEdit}/>
             );
         }).filter((book, index) => {
             return index >= offset && index < nextPageOffset;
         })
     }
+
 }
 
 export default Books;
